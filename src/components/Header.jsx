@@ -17,15 +17,19 @@ export default function Header() {
         to="/"
         className="flex bg-clip-text text-transparent bg-gradient-to-r from-green to-beige font-bold text-4xl italic"
       >
-        Agshop
+        AgneShop
         <MdOutlineEmojiNature className="text-brown-light" />
       </Link>
       <nav className="flex gap-8 items-center text-lg font-semibold">
         <Link to="/shop">Shop</Link>
-        <Link to="/carts">
-          <CartStatus />
-        </Link>
-        {user && <User user={user} />}
+        {user && (
+          <>
+            <Link to="/carts">
+              <CartStatus />
+            </Link>
+            <User user={user} />
+          </>
+        )}
         {user && user.isAdmin && (
           <Link to="/shop/product/add">
             <BsPencilSquare className="text-2xl text-green" />

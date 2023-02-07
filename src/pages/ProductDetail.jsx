@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
+import { googleLogin } from "../api/firebase";
 import Button from "../components/ui/Button";
 import { useAuthContext } from "../context/AuthContext";
 import useCarts from "../hooks/useCarts";
@@ -19,6 +20,11 @@ export default function ProductDetail() {
 
   const handleClick = (e) => {
     const product = { id, image, title, price, option: selected, quantity: 1 };
+
+    if (!user) {
+      googleLogin();
+      return;
+    }
     addOrUpdateItem.mutate(product, {
       onSuccess: () => {
         setSuccess("Added to Cart!");
