@@ -71,6 +71,20 @@ export async function addProduct(product, image) {
   });
 }
 
+export async function updateProduct(product, image) {
+  console.debug(`SUJIN:: ~ updateProduct ~ product`, product);
+  // return set(ref(db, `products/${product.id}`), {
+  //   ...product,
+  //   price: parseInt(product.price),
+  //   image,
+  //   options: product.options.split(","),
+  // });
+}
+
+export async function removeProduct(product) {
+  return remove(ref(db, `products/${product.id}`));
+}
+
 export async function getProducts() {
   return get(ref(db, "products")).then((snapshot) => {
     if (snapshot.exists()) {

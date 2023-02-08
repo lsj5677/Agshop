@@ -5,8 +5,8 @@ export default function Banner() {
     <section className="relative h-96 bg-brown-dark">
       <div className="w-full h-full bg-fixed bg-banner"></div>
       <div className="absolute w-full top-1/2 -translate-y-1/2 text-center text-beige">
-        <h2 className="text-3xl">Agshop</h2>
-        <p>Best Products, High Quality</p>
+        <h2 className="text-3xl">Agneshop</h2>
+        <p>This is Agneshop from Korea</p>
         <span className="inline-block mt-4 text-xs">
           Photo by{" "}
           <a

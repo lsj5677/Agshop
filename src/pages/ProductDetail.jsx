@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { googleLogin } from "../api/firebase";
 import Button from "../components/ui/Button";
 import { useAuthContext } from "../context/AuthContext";
 import useCarts from "../hooks/useCarts";
+import useProducts from "../hooks/useProducts";
 
 export default function ProductDetail() {
   const {
@@ -12,13 +13,26 @@ export default function ProductDetail() {
     },
   } = useLocation();
 
+  const productDetailData = {
+    id,
+    image,
+    title,
+    desc,
+    options,
+    category,
+    price,
+  };
+
   const { user } = useAuthContext();
   const [success, setSuccess] = useState();
   const { addOrUpdateItem } = useCarts();
+  const { removedProduct } = useProducts();
   const [selected, setSelected] = useState(options && options[0]);
+  const navigate = useNavigate();
+
   const handleSelect = (e) => setSelected(e.target.value);
 
-  const handleClick = (e) => {
+  const handleClick = () => {
     const product = { id, image, title, price, option: selected, quantity: 1 };
 
     if (!user) {
@@ -33,12 +47,40 @@ export default function ProductDetail() {
     });
   };
 
+  const handleDelete = () => {
+    const productId = { id };
+
+    console.debug(`SUJIN:: ~ handleDelete ~ productId`, productId);
+    if (window.confirm("Are you sure you want to delete?")) {
+      removedProduct.mutate(productId, {
+        onSuccess: () => {
+          alert("Success.");
+          navigate("/shop");
+        },
+      });
+    }
+  };
+
   return (
     <>
       {user && user.isAdmin && (
         <div className="sub-wrap flex gap-3 justify-end">
-          <Button text="Edit" />
-          <Button text="Delete" />
+          <Button
+            text="Edit"
+            className="bg-beige py-1 px-4 rounded hover:bg-brown-light active:bg-brown-dark active:text-beige"
+            onClick={() => {
+              navigate(`/shop/product/edit/${id}`, {
+                state: { productDetailData },
+              });
+            }}
+          />
+          <Link to={`/shop/product/update/${id}`}>Edit</Link>
+          <Button text="delete" onClick={handleDelete} />
+          {success && (
+            <p className="absolute top-5 left-1/2 -traslate-x-1/2 bg-green text-white p-3 rounded-md text-xl">
+              {success}
+            </p>
+          )}
         </div>
       )}
       <section className="relative sub-wrap md:flex sm:gap-20 md:gap-20 xl:gap-40">
