@@ -43,8 +43,12 @@ export default function Header() {
             : "right-full transition-all ease-in-out duration-300"
         } fixed top-0 z-20 w-screen h-screen pt-40 bg-white flex flex-col gap-8 items-center text-lg font-semibold md:static md:w-auto md:h-auto md:bg-transparent md:right-0 md:flex-row md:pt-0`}
       >
-        <a href="/">About</a>
-        <Link to="/shop">Shop</Link>
+        <Link to="/" onClick={() => setMobile(false)}>
+          About
+        </Link>
+        <Link to="/shop" onClick={() => setMobile(false)}>
+          Shop
+        </Link>
         {user && (
           <a href="/carts">
             <CartStatus />
