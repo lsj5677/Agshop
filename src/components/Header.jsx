@@ -9,16 +9,29 @@ import User from "./User";
 import Button from "./ui/Button";
 import { useAuthContext } from "../context/AuthContext";
 import CartStatus from "./CartStatus";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
   const { user } = useAuthContext();
   const [mobile, setMobile] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    googleLogin();
+    setMobile(false);
+  };
+
+  const handleLogout = () => {
+    googleLogout();
+    setMobile(false);
+    navigate("/");
+  };
 
   return (
     <header className="sub-wrap flex justify-between">
       <Link
         to="/"
-        className="flex bg-clip-text text-transparent bg-gradient-to-r from-green to-beige font-bold text-4xl italic"
+        className="flex bg-clip-text text-transparent bg-gradient-to-r from-green to-beige font-bold text-2xl sm:text-4xl italic"
       >
         AgneShop
         <MdOutlineEmojiNature className="text-brown-light" />
@@ -26,18 +39,18 @@ export default function Header() {
       <nav
         className={`${
           mobile
-            ? "right-0 transition-all ease-in-out duration-300"
+            ? "right-0 transition-all ease-in-out duration-300 z-10"
             : "right-full transition-all ease-in-out duration-300"
         } fixed top-0 w-screen h-screen pt-40 bg-white flex flex-col gap-8 items-center text-lg font-semibold md:static md:w-auto md:h-auto md:bg-transparent md:right-0 md:flex-row md:pt-0`}
       >
-        <Link to="/">About</Link>
-        <Link to="/shop">Shop</Link>
+        <a href="/">About</a>
+        <a href="/shop">Shop</a>
         {user && (
-          <Link to="/carts">
+          <a href="/carts">
             <CartStatus />
-          </Link>
+          </a>
         )}
-        <div className="mt-10 flex gap-8 border-t border-beige pt-10 md:gap-4 md:mt-0 md:border-0 md:pt-0">
+        <div className="mt-10 flex gap-8 pt-10 md:gap-4 md:mt-0 md:border-0 md:pt-0">
           {user && <User user={user} />}
           {user && user.isAdmin && (
             <Link to="/shop/product/add">
@@ -45,14 +58,14 @@ export default function Header() {
             </Link>
           )}
           {!user ? (
-            <Button text="Login" onClick={googleLogin} />
+            <Button text="Login" onClick={handleLogin} />
           ) : (
-            <Button text="Logout" onClick={googleLogout} />
+            <Button text="Logout" onClick={handleLogout} />
           )}
         </div>
       </nav>
       <button
-        className="fixed z-10 top-10 right-10 text-3xl md:hidden"
+        className="fixed z-10 top-7 right-7 text-3xl bg-beige p-2 rounded-full md:hidden"
         onClick={() => setMobile(!mobile)}
       >
         {mobile ? <IoCloseOutline className="text-4xl" /> : <RxHamburgerMenu />}
