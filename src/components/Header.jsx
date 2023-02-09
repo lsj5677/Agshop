@@ -41,10 +41,10 @@ export default function Header() {
           mobile
             ? "right-0 transition-all ease-in-out duration-300 z-10"
             : "right-full transition-all ease-in-out duration-300"
-        } fixed top-0 w-screen h-screen pt-40 bg-white flex flex-col gap-8 items-center text-lg font-semibold md:static md:w-auto md:h-auto md:bg-transparent md:right-0 md:flex-row md:pt-0`}
+        } fixed top-0 z-20 w-screen h-screen pt-40 bg-white flex flex-col gap-8 items-center text-lg font-semibold md:static md:w-auto md:h-auto md:bg-transparent md:right-0 md:flex-row md:pt-0`}
       >
         <a href="/">About</a>
-        <a href="/shop">Shop</a>
+        <Link to="/shop">Shop</Link>
         {user && (
           <a href="/carts">
             <CartStatus />
@@ -65,7 +65,7 @@ export default function Header() {
         </div>
       </nav>
       <button
-        className="fixed z-10 top-7 right-7 text-3xl bg-beige p-2 rounded-full md:hidden"
+        className="fixed z-30 top-7 right-7 text-3xl bg-beige p-2 rounded-full md:hidden"
         onClick={() => setMobile(!mobile)}
       >
         {mobile ? <IoCloseOutline className="text-4xl" /> : <RxHamburgerMenu />}
