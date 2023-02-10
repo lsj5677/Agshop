@@ -50,9 +50,9 @@ export default function Header() {
           Shop
         </Link>
         {user && (
-          <a href="/carts">
+          <Link to="/cart" onClick={() => setMobile(false)}>
             <CartStatus />
-          </a>
+          </Link>
         )}
         <div className="mt-10 flex gap-8 pt-10 md:gap-4 md:mt-0 md:border-0 md:pt-0">
           {user && <User user={user} />}
