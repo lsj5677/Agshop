@@ -50,7 +50,7 @@ export default function Header() {
           Shop
         </Link>
         {user && (
-          <Link to="/cart" onClick={() => setMobile(false)}>
+          <Link to="/carts" onClick={() => setMobile(false)}>
             <CartStatus />
           </Link>
         )}
